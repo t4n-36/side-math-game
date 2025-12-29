@@ -1,27 +1,6 @@
-/* ================================
-   Firebase（そのままでOK）
-================================ */
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+/* ===== 足し算クイズ ===== */
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBmGCh5ReN4wErT2exxP3u1Eo-cEnJKQt4",
-  authDomain: "side-math-game.firebaseapp.com",
-  projectId: "side-math-game",
-  storageBucket: "side-math-game.firebasestorage.app",
-  messagingSenderId: "240836494206",
-  appId: "1:240836494206:web:f1979d0ba424c307bca92f",
-  measurementId: "G-GTR2T3BPB5"
-};
-
-const app = initializeApp(firebaseConfig);
-getAnalytics(app);
-
-/* ================================
-   足し算クイズ
-================================ */
-let a = 0;
-let b = 0;
+let a, b;
 let score = 0;
 
 function newQuestion() {
@@ -58,17 +37,12 @@ function checkAnswer() {
   }
 }
 
-/* HTML から呼べるようにする */
 window.newQuestion = newQuestion;
 window.checkAnswer = checkAnswer;
 
-/* 初回 */
 newQuestion();
 
-/* ================================
-   素因数分解ゲーム
-================================ */
-const primeChoices = [2, 3, 5, 7, 11, 13];
+/* ===== 素因数分解ゲーム ===== */
 
 let pfNumber = 0;
 let originalNumber = 0;
@@ -79,25 +53,23 @@ let timeLeft = 30;
 let miss = 0;
 let timerId = null;
 
-/* 最高スコア（端末保存） */
+const primeChoices = [2, 3, 5, 7, 11, 13];
+
+// localStorage 最高スコア
 let bestScore = Number(localStorage.getItem("pfBestScore")) || 0;
 document.getElementById("best-score").textContent = bestScore;
 
-/* 必ず 1 になる数を作る */
 function generateFactorNumber() {
-  const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
+  const count = Math.floor(Math.random() * 4) + 3;
   let n = 1;
   for (let i = 0; i < count; i++) {
-    const p = primeChoices[Math.floor(Math.random() * primeChoices.length)];
-    n *= p;
+    n *= primeChoices[Math.floor(Math.random() * primeChoices.length)];
   }
   return n;
 }
 
-/* スタート */
 function startPrimeFactorGame() {
   clearInterval(timerId);
-
   document.getElementById("pf-area").style.display = "block";
 
   timeLeft = 30;
@@ -112,29 +84,24 @@ function startPrimeFactorGame() {
   startTimer();
 }
 
-/* 次の問題 */
+window.startPrimeFactorGame = startPrimeFactorGame;
+
 function nextQuestion() {
   pfNumber = generateFactorNumber();
   originalNumber = pfNumber;
   history = [];
-
   updateUI();
   updateHistory();
 }
 
-/* タイマー */
 function startTimer() {
   timerId = setInterval(() => {
     timeLeft--;
     document.getElementById("time").textContent = timeLeft;
-
-    if (timeLeft <= 0) {
-      finishGame("⏱ 時間終了");
-    }
+    if (timeLeft <= 0) finishGame("⏱ 時間終了");
   }, 1000);
 }
 
-/* UI更新 */
 function updateUI() {
   document.getElementById("pf-current-number").textContent =
     "現在の数: " + pfNumber;
@@ -150,18 +117,13 @@ function updateUI() {
   });
 }
 
-/* 履歴（完成形も必ず表示） */
 function updateHistory() {
-  if (history.length === 0) {
-    document.getElementById("pf-history").textContent =
-      `${originalNumber} = ?`;
-  } else {
-    document.getElementById("pf-history").textContent =
-      `${originalNumber} = ${history.join(" × ")}`;
-  }
+  document.getElementById("pf-history").textContent =
+    history.length === 0
+      ? `${originalNumber} = ?`
+      : `${originalNumber} = ${history.join(" × ")}`;
 }
 
-/* 選択処理 */
 function choosePrime(p) {
   if (pfNumber % p === 0) {
     pfNumber /= p;
@@ -170,25 +132,19 @@ function choosePrime(p) {
 
     if (pfNumber === 1) {
       pfScore++;
-      document.getElementById("pf-message").textContent =
-        "⭕ 正解！完成形を表示しました";
       nextQuestion();
     } else {
       updateUI();
-      document.getElementById("pf-message").textContent = "⭕ 正解";
     }
+    document.getElementById("pf-message").textContent = "⭕ 正解";
   } else {
     miss++;
     document.getElementById("miss").textContent = miss;
     document.getElementById("pf-message").textContent = "❌ 割れません";
-
-    if (miss >= 2) {
-      finishGame("❌ 終了");
-    }
+    if (miss >= 2) finishGame("終了");
   }
 }
 
-/* 終了処理 */
 function finishGame(title) {
   clearInterval(timerId);
 
@@ -201,10 +157,6 @@ function finishGame(title) {
   document.getElementById("pf-current-number").textContent = title;
   document.getElementById("pf-history").textContent =
     `結果：正解 ${pfScore} 問 ／ ミス ${miss} 回`;
-
   document.getElementById("pf-buttons").innerHTML = "";
   document.getElementById("pf-message").textContent = "おつかれさまでした！";
 }
-
-/* HTML から呼べるように */
-window.startPrimeFactorGame = startPrimeFactorGame;
