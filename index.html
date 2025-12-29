@@ -10,6 +10,14 @@
   <h1>足し算クイズ</h1>
   <p>数学ゲーム制作中</p>
 
+  <select id="level" onchange="newQuestion()">
+    <option value="easy">かんたん</option>
+    <option value="normal">ふつう</option>
+    <option value="hard">むずかしい</option>
+  </select>
+
+  <p>正解数：<span id="score">0</span></p>
+
   <div id="quiz">
     <p id="question">問題がここに表示されます</p>
 
@@ -21,26 +29,18 @@
     <p id="result"></p>
   </div>
 
+  <hr>
+
+  <h2>素因数分解ゲーム（選択式）</h2>
+
+  <p id="pf-current-number"></p>
+
+  <div id="pf-buttons"></div>
+
+  <p id="pf-message"></p>
+
+  <button onclick="startPrimeFactorGame()">新しい問題</button>
+
   <script src="main.js"></script>
 </body>
 </html>
-
-<select id="level" onchange="newQuestion()">
-  <option value="easy">かんたん</option>
-  <option value="normal">ふつう</option>
-  <option value="hard">むずかしい</option>
-</select>
-
-<p>正解数：<span id="score">0</span></p>
-
-<hr>
-
-<h2>素因数分解ゲーム（選択式）</h2>
-
-<p id="pf-current-number"></p>
-
-<div id="pf-buttons"></div>
-
-<p id="pf-message"></p>
-
-<button onclick="startPrimeFactorGame()">新しい問題</button>
