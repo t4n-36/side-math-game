@@ -82,5 +82,9 @@ function choosePrime(p) {
     document.getElementById("pf-message").textContent = "正解！";
   } else {
     document.getElementById("pf-message").textContent =
-      "❌
+      "❌ その数では割れません";
+  }
+}
+
+startPrimeFactorGame();
 
