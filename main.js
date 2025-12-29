@@ -1,3 +1,5 @@
+/* ===== 足し算クイズ ===== */
+
 let a, b;
 let score = 0;
 
@@ -41,9 +43,7 @@ function checkAnswer() {
 // 初回
 newQuestion();
 
-/* ===== 素因数分解ゲーム ===== */
-
-/* ===== 素因数分解ゲーム（履歴＋30秒制限・結果表示） ===== */
+/* ===== 素因数分解ゲーム（履歴＋30秒・ミス2・結果表示） ===== */
 
 let pfNumber = 0;
 let originalNumber = 0;
@@ -152,29 +152,5 @@ function choosePrime(p) {
   } else {
     miss++;
     document.getElementById("miss").textContent = miss;
-    document.getElementById("pf-message").textContent =
-      "❌ 割れません";
+    document.getElementById("pf-message
 
-    if (miss >= 2) {
-      finishGame("❌ ミス上限に達しました");
-    }
-  }
-}
-
-// 終了・結果表示
-function finishGame(title) {
-  clearInterval(timerId);
-
-  document.getElementById("pf-current-number").textContent =
-    title;
-
-  document.getElementById("pf-history").textContent =
-    `結果：正解 ${pfScore} 問 ／ ミス ${miss} 回`;
-
-  document.getElementById("pf-buttons").innerHTML = "";
-  document.getElementById("pf-message").textContent =
-    "おつかれさまでした！";
-}
-
-// 初回起動
-startPrimeFactorGame();
