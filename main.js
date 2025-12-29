@@ -43,3 +43,10 @@ function newQuestion() {
   document.getElementById("question").textContent =
     `${a} + ${b} はいくつ？`;
 }
+
+let score = 0;
+
+if (userAnswer === a + b) {
+  score++;
+  document.getElementById("score").textContent = score;
+}
