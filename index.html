@@ -8,43 +8,48 @@
 </head>
 <body>
 
-  <h1>足し算クイズ</h1>
-  <p>数学ゲーム制作中</p>
+  <h1>数学ゲーム</h1>
 
-  <select id="level" onchange="newQuestion()">
-    <option value="easy">かんたん</option>
-    <option value="normal">ふつう</option>
-    <option value="hard">むずかしい</option>
-  </select>
+  <!-- ===== 足し算クイズ ===== -->
+  <section class="card">
+    <h2>足し算クイズ</h2>
 
-  <p>正解数：<span id="score">0</span></p>
+    <select id="level" onchange="newQuestion()">
+      <option value="easy">かんたん</option>
+      <option value="normal">ふつう</option>
+      <option value="hard">むずかしい</option>
+    </select>
 
-  <div id="quiz">
+    <p>正解数：<span id="score">0</span></p>
+
     <p id="question">問題がここに表示されます</p>
 
     <input type="number" id="answer" placeholder="答えを入力">
-    <br><br>
-
     <button onclick="checkAnswer()">答える</button>
+
     <p id="result"></p>
-  </div>
+  </section>
 
-  <hr>
+  <!-- ===== 素因数分解ゲーム ===== -->
+  <section class="card">
+    <h2>素因数分解ゲーム（選択式）</h2>
 
- 
-<h2>素因数分解ゲーム（選択式）</h2>
+    <p>歴代最高スコア：<span id="best-score">0</span></p>
 
-<p>歴代最高スコア：<span id="best-score">0</span></p>
+    <button onclick="startPrimeFactorGame()">▶ スタート</button>
 
-<button onclick="startPrimeFactorGame()">▶ スタート</button>
+    <div id="pf-area" style="display:none;">
+      <p>残り時間：<span id="time">30</span> 秒</p>
+      <p>ミス：<span id="miss">0</span> / 2</p>
 
-<div id="pf-area" style="display:none;">
-  <p>残り時間：<span id="time">30</span> 秒</p>
-  <p>ミス：<span id="miss">0</span> / 2</p>
+      <p id="pf-current-number"></p>
+      <p id="pf-history"></p>
 
-  <p id="pf-current-number"></p>
-  <p id="pf-history"></p>
+      <div id="pf-buttons"></div>
+      <p id="pf-message"></p>
+    </div>
+  </section>
 
-  <div id="pf-buttons"></div>
-  <p id="pf-message"></p>
-</div>
+  <script src="main.js"></script>
+</body>
+</html>
