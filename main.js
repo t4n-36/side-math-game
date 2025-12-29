@@ -43,11 +43,28 @@ newQuestion();
 
 /* ===== 素因数分解ゲーム ===== */
 
+/* ===== 素因数分解ゲーム（最大値拡張・完成形） ===== */
+
 let pfNumber = 0;
-const primeChoices = [2, 3, 5, 7];
+let history = [];
+const primeChoices = [2, 3, 5, 7, 11, 13];
+
+// 問題を作る（必ず1になる & 大きい数）
+function generateFactorNumber() {
+  const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
+  let n = 1;
+  history = [];
+
+  for (let i = 0; i < count; i++) {
+    const p = primeChoices[Math.floor(Math.random() * primeChoices.length)];
+    n *= p;
+    history.push(p);
+  }
+  return n;
+}
 
 function startPrimeFactorGame() {
-  pfNumber = Math.floor(Math.random() * 89) + 12;
+  pfNumber = generateFactorNumber();
   updatePrimeFactorUI();
   document.getElementById("pf-message").textContent = "";
 }
@@ -73,7 +90,7 @@ function choosePrime(p) {
 
     if (pfNumber === 1) {
       document.getElementById("pf-current-number").textContent =
-        "🎉 1になりました！クリア！";
+        "🎉 1になりました！完全クリア！";
       document.getElementById("pf-buttons").innerHTML = "";
     } else {
       updatePrimeFactorUI();
@@ -86,5 +103,5 @@ function choosePrime(p) {
   }
 }
 
+// 初回
 startPrimeFactorGame();
-
