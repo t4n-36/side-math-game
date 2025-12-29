@@ -68,7 +68,7 @@ function generateFactorNumber() {
   return n;
 }
 
-/* ===== スタート（カウントダウン付き） ===== */
+/* ===== スタート ===== */
 function startPrimeFactorGame() {
   clearInterval(timerId);
   clearInterval(countdownId);
@@ -96,7 +96,6 @@ function startCountdown() {
 
   countdownId = setInterval(() => {
     count--;
-
     if (count > 0) {
       document.getElementById("pf-current-number").textContent = count;
     } else {
@@ -119,7 +118,6 @@ function nextQuestion() {
   pfNumber = generateFactorNumber();
   originalNumber = pfNumber;
   history = [];
-
   updateUI();
   updateHistory();
 }
@@ -129,11 +127,28 @@ function startTimer() {
   timerId = setInterval(() => {
     timeLeft--;
     document.getElementById("time").textContent = timeLeft;
+    updateTimeBar();
 
     if (timeLeft <= 0) {
       finishGame("⏱ 時間終了");
     }
   }, 1000);
+}
+
+/* ===== タイムバー更新 ===== */
+function updateTimeBar() {
+  const percent = (timeLeft / 30) * 100;
+  const bar = document.getElementById("time-bar-inner");
+  bar.style.width = percent + "%";
+
+  // 色変化：緑 → 黄 → 赤
+  if (percent > 50) {
+    bar.style.background = "linear-gradient(90deg, #4caf50, #8bc34a)";
+  } else if (percent > 20) {
+    bar.style.background = "linear-gradient(90deg, #ffeb3b, #ffc107)";
+  } else {
+    bar.style.background = "linear-gradient(90deg, #f44336, #ff5722)";
+  }
 }
 
 /* ===== UI更新 ===== */
@@ -202,6 +217,7 @@ function finishGame(title) {
 
   document.getElementById("pf-buttons").innerHTML = "";
   document.getElementById("pf-message").textContent = "おつかれさまでした！";
+  updateTimeBar();
 }
 
 
