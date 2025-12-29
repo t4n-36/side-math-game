@@ -52,7 +52,7 @@ let timerId = null;
 
 const primeChoices = [2, 3, 5, 7, 11, 13];
 
-// 最高スコア
+// 最高スコア（端末ごと）
 let bestScore = localStorage.getItem("pfBestScore") || 0;
 document.getElementById("best-score").textContent = bestScore;
 
@@ -156,4 +156,9 @@ function finishGame(title) {
   document.getElementById("pf-buttons").innerHTML = "";
   document.getElementById("pf-message").textContent = "おつかれさまでした！";
 }
+
+/* ===== HTMLから呼び出すための公開 ===== */
+window.newQuestion = newQuestion;
+window.checkAnswer = checkAnswer;
+window.startPrimeFactorGame = startPrimeFactorGame;
 
