@@ -25,3 +25,21 @@ function checkAnswer() {
 }
 
 newQuestion();
+
+function newQuestion() {
+  const level = document.getElementById("level").value;
+
+  if (level === "easy") {
+    a = Math.floor(Math.random() * 10);
+    b = Math.floor(Math.random() * 10);
+  } else if (level === "normal") {
+    a = Math.floor(Math.random() * 50);
+    b = Math.floor(Math.random() * 50);
+  } else {
+    a = Math.floor(Math.random() * 100);
+    b = Math.floor(Math.random() * 100);
+  }
+
+  document.getElementById("question").textContent =
+    `${a} + ${b} はいくつ？`;
+}
