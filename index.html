@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>数学ゲーム</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -27,7 +26,6 @@
     <br><br>
 
     <button onclick="checkAnswer()">答える</button>
-
     <p id="result"></p>
   </div>
 
@@ -35,10 +33,13 @@
 
   <h2>素因数分解ゲーム（選択式）</h2>
 
+  <p>残り時間：<span id="time">30</span> 秒</p>
+  <p>ミス：<span id="miss">0</span> / 2</p>
+
   <p id="pf-current-number"></p>
+  <p id="pf-history"></p>
 
   <div id="pf-buttons"></div>
-
   <p id="pf-message"></p>
 
   <button onclick="startPrimeFactorGame()">新しい問題</button>
@@ -46,7 +47,3 @@
   <script src="main.js"></script>
 </body>
 </html>
-
-<p>残り時間：<span id="time">60</span> 秒</p>
-<p>ミス：<span id="miss">0</span> / 3</p>
-<p id="pf-history"></p>
