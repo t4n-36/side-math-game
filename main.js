@@ -43,7 +43,7 @@ function checkAnswer() {
 // 初回
 newQuestion();
 
-/* ===== 素因数分解ゲーム（履歴＋30秒・ミス2・結果表示） ===== */
+/* ===== 素因数分解ゲーム（非表示スタート＋最高スコア） ===== */
 
 let pfNumber = 0;
 let originalNumber = 0;
@@ -56,9 +56,13 @@ let timerId = null;
 
 const primeChoices = [2, 3, 5, 7, 11, 13];
 
+// 最高スコア読み込み
+let bestScore = localStorage.getItem("pfBestScore") || 0;
+document.getElementById("best-score").textContent = bestScore;
+
 // 必ず 1 になる数を作る
 function generateFactorNumber() {
-  const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
+  const count = Math.floor(Math.random() * 4) + 3;
   let n = 1;
 
   for (let i = 0; i < count; i++) {
@@ -68,9 +72,11 @@ function generateFactorNumber() {
   return n;
 }
 
-// ゲーム開始
+// スタート
 function startPrimeFactorGame() {
   clearInterval(timerId);
+
+  document.getElementById("pf-area").style.display = "block";
 
   timeLeft = 30;
   miss = 0;
@@ -143,7 +149,7 @@ function choosePrime(p) {
     if (pfNumber === 1) {
       pfScore++;
       document.getElementById("pf-message").textContent =
-        "⭕ 正解！次の問題へ";
+        "⭕ 正解！次へ";
       nextPrimeFactorQuestion();
     } else {
       updatePrimeFactorUI();
@@ -152,5 +158,33 @@ function choosePrime(p) {
   } else {
     miss++;
     document.getElementById("miss").textContent = miss;
-    document.getElementById("pf-message
+    document.getElementById("pf-message").textContent =
+      "❌ 割れません";
 
+    if (miss >= 2) {
+      finishGame("❌ ミス上限");
+    }
+  }
+}
+
+// 終了・結果表示
+function finishGame(title) {
+  clearInterval(timerId);
+
+  // 最高スコア更新
+  if (pfScore > bestScore) {
+    bestScore = pfScore;
+    localStorage.setItem("pfBestScore", bestScore);
+    document.getElementById("best-score").textContent = bestScore;
+  }
+
+  document.getElementById("pf-current-number").textContent =
+    title;
+
+  document.getElementById("pf-history").textContent =
+    `結果：正解 ${pfScore} 問（最高 ${bestScore}）`;
+
+  document.getElementById("pf-buttons").innerHTML = "";
+  document.getElementById("pf-message").textContent =
+    "おつかれさまでした！";
+}
