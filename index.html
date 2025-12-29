@@ -25,7 +25,7 @@
     <p id="question">問題がここに表示されます</p>
 
     <input type="number" id="answer" placeholder="答えを入力">
-    <button onclick="checkAnswer()">答える</button>
+    <button type="button" onclick="checkAnswer()">答える</button>
 
     <p id="result"></p>
   </section>
@@ -36,7 +36,7 @@
 
     <p>歴代最高スコア：<span id="best-score">0</span></p>
 
-    <button onclick="startPrimeFactorGame()">▶ スタート</button>
+    <button type="button" onclick="startPrimeFactorGame()">▶ スタート</button>
 
     <div id="pf-area" style="display:none;">
       <p>残り時間：<span id="time">30</span> 秒</p>
@@ -50,7 +50,8 @@
     </div>
   </section>
 
- <script type="module" src="main.js"></script>
+  <!-- JavaScript -->
+  <script type="module" src="main.js"></script>
 
 </body>
 </html>
