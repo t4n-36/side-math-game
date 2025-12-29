@@ -1,42 +1,120 @@
+/* ===== 全体 ===== */
 body {
-  font-family: system-ui, sans-serif;
+  font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #dbe7ff);
   margin: 0;
-  padding: 10px;
-  background: #f2f2f2;
-}
-
-h1 {
+  padding: 20px;
   text-align: center;
 }
 
+h1 {
+  margin-bottom: 30px;
+}
+
+/* ===== カード共通 ===== */
 .card {
-  background: #fff;
-  padding: 15px;
+  background: white;
+  max-width: 420px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== 足し算クイズ ===== */
+#question {
+  font-size: 22px;
   margin: 15px 0;
-  border-radius: 12px;
+}
+
+input {
+  font-size: 18px;
+  padding: 6px;
+  width: 120px;
+  text-align: center;
 }
 
 button {
-  font-size: 18px;
-  padding: 10px 14px;
-  margin: 5px;
+  font-size: 16px;
+  padding: 8px 16px;
+  margin: 8px;
   border-radius: 10px;
   border: none;
-  background: #4caf50;
+  background: #4f7cff;
   color: white;
+  cursor: pointer;
 }
 
-button:active {
-  background: #388e3c;
+button:hover {
+  background: #365edc;
 }
 
-input, select {
+/* ===== 素因数分解ゲーム ===== */
+#pf-area {
+  margin-top: 20px;
+}
+
+/* 現在の数 */
+#pf-current-number {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px 0;
+  color: #2c3e50;
+}
+
+/* 履歴 */
+#pf-history {
   font-size: 18px;
-  padding: 8px;
-  width: 100%;
-  margin: 8px 0;
+  margin-bottom: 15px;
+  color: #555;
 }
 
+/* ボタンエリア */
+#pf-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* 素数ボタン */
 #pf-buttons button {
-  width: 30%;
+  font-size: 20px;
+  padding: 14px;
+  background: #ffb703;
+  color: #333;
+  font-weight: bold;
+  border-radius: 14px;
+  box-shadow: 0 4px 0 #d18f00;
+}
+
+#pf-buttons button:hover {
+  background: #ffd166;
+}
+
+#pf-buttons button:active {
+  box-shadow: 0 2px 0 #d18f00;
+  transform: translateY(2px);
+}
+
+/* 正誤メッセージ */
+#pf-message {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#pf-message:contains("⭕") {
+  color: green;
+}
+
+#pf-message:contains("❌") {
+  color: red;
+}
+
+/* タイマー・ミス */
+#time,
+#miss {
+  font-weight: bold;
+  font-size: 18px;
 }
