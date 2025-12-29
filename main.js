@@ -1,3 +1,17 @@
+/* ===== Firebase（初期化のみ・今は未使用） ===== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBmGCh5ReN4wErT2exxP3u1Eo-cEnJKQt4",
+  authDomain: "side-math-game.firebaseapp.com",
+  projectId: "side-math-game",
+  storageBucket: "side-math-game.appspot.com",
+  messagingSenderId: "240836494206",
+  appId: "1:240836494206:web:f1979d0ba424c307bca92f"
+};
+
+initializeApp(firebaseConfig);
+
 /* ===== 足し算クイズ ===== */
 
 let a, b;
@@ -24,7 +38,7 @@ function newQuestion() {
   document.getElementById("result").textContent = "";
 }
 
-function checkAnswer() {
+window.checkAnswer = function () {
   const userAnswer = Number(document.getElementById("answer").value);
 
   if (userAnswer === a + b) {
@@ -35,11 +49,11 @@ function checkAnswer() {
   } else {
     document.getElementById("result").textContent = "❌ ちがうよ";
   }
-}
+};
 
 newQuestion();
 
-/* ===== 素因数分解ゲーム ===== */
+/* ===== 素因数分解ゲーム（タイムアタック） ===== */
 
 let pfNumber = 0;
 let originalNumber = 0;
@@ -52,12 +66,13 @@ let timerId = null;
 
 const primeChoices = [2, 3, 5, 7, 11, 13];
 
-// 最高スコア
-let bestScore = localStorage.getItem("pfBestScore") || 0;
+/* 最高スコア（端末ごと） */
+let bestScore = Number(localStorage.getItem("pfBestScore")) || 0;
 document.getElementById("best-score").textContent = bestScore;
 
+/* 必ず 1 になる数を作る */
 function generateFactorNumber() {
-  const count = Math.floor(Math.random() * 4) + 3;
+  const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
   let n = 1;
   for (let i = 0; i < count; i++) {
     const p = primeChoices[Math.floor(Math.random() * primeChoices.length)];
@@ -66,8 +81,9 @@ function generateFactorNumber() {
   return n;
 }
 
-function startPrimeFactorGame() {
+window.startPrimeFactorGame = function () {
   clearInterval(timerId);
+
   document.getElementById("pf-area").style.display = "block";
 
   timeLeft = 30;
@@ -80,7 +96,7 @@ function startPrimeFactorGame() {
 
   nextQuestion();
   startTimer();
-}
+};
 
 function nextQuestion() {
   pfNumber = generateFactorNumber();
@@ -128,15 +144,17 @@ function choosePrime(p) {
 
     if (pfNumber === 1) {
       pfScore++;
+      document.getElementById("pf-message").textContent = "⭕ 正解！";
       nextQuestion();
     } else {
       updateUI();
+      document.getElementById("pf-message").textContent = "⭕ 正解";
     }
-    document.getElementById("pf-message").textContent = "⭕ 正解";
   } else {
     miss++;
     document.getElementById("miss").textContent = miss;
     document.getElementById("pf-message").textContent = "❌ 割れません";
+
     if (miss >= 2) finishGame("❌ 終了");
   }
 }
