@@ -1,6 +1,4 @@
-/* ==============================
-   足し算クイズ
-============================== */
+/* ===== 足し算クイズ ===== */
 
 let a, b;
 let score = 0;
@@ -41,31 +39,28 @@ function checkAnswer() {
 
 newQuestion();
 
-/* ==============================
-   素因数分解ゲーム
-============================== */
+/* ===== 素因数分解ゲーム ===== */
 
 let pfNumber = 0;
 let originalNumber = 0;
 let history = [];
 let pfScore = 0;
 
-const MAX_TIME = 30;
-let timeLeft = MAX_TIME;
+let timeLeft = 30;
 let miss = 0;
 let timerId = null;
+let countdownId = null;
 
 const primeChoices = [2, 3, 5, 7, 11, 13];
 
-// ローカル最高スコア
-let bestScore = Number(localStorage.getItem("pfBestScore")) || 0;
+// 最高スコア（端末ごと）
+let bestScore = localStorage.getItem("pfBestScore") || 0;
 document.getElementById("best-score").textContent = bestScore;
 
-// 必ず 1 になる数を生成
+/* --- 出題用の数を作る --- */
 function generateFactorNumber() {
   const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
   let n = 1;
-
   for (let i = 0; i < count; i++) {
     const p = primeChoices[Math.floor(Math.random() * primeChoices.length)];
     n *= p;
@@ -73,39 +68,67 @@ function generateFactorNumber() {
   return n;
 }
 
-// ゲーム開始
+/* ===== スタート（カウントダウン付き） ===== */
 function startPrimeFactorGame() {
   clearInterval(timerId);
+  clearInterval(countdownId);
+
   document.getElementById("pf-area").style.display = "block";
 
-  timeLeft = MAX_TIME;
+  timeLeft = 30;
   miss = 0;
   pfScore = 0;
 
   document.getElementById("time").textContent = timeLeft;
   document.getElementById("miss").textContent = miss;
-  document.getElementById("pf-message").textContent = "";
 
-  updateTimeBar();
+  document.getElementById("pf-buttons").innerHTML = "";
+  document.getElementById("pf-history").textContent = "";
+  document.getElementById("pf-message").textContent = "準備中…";
+
+  startCountdown();
+}
+
+/* ===== 3秒カウントダウン ===== */
+function startCountdown() {
+  let count = 3;
+  document.getElementById("pf-current-number").textContent = count;
+
+  countdownId = setInterval(() => {
+    count--;
+
+    if (count > 0) {
+      document.getElementById("pf-current-number").textContent = count;
+    } else {
+      clearInterval(countdownId);
+      document.getElementById("pf-current-number").textContent = "START!";
+      setTimeout(startGame, 500);
+    }
+  }, 1000);
+}
+
+/* ===== 本当のゲーム開始 ===== */
+function startGame() {
+  document.getElementById("pf-message").textContent = "";
   nextQuestion();
   startTimer();
 }
 
-// 次の問題
+/* ===== 次の問題 ===== */
 function nextQuestion() {
   pfNumber = generateFactorNumber();
   originalNumber = pfNumber;
   history = [];
+
   updateUI();
   updateHistory();
 }
 
-// タイマー
+/* ===== タイマー ===== */
 function startTimer() {
   timerId = setInterval(() => {
     timeLeft--;
     document.getElementById("time").textContent = timeLeft;
-    updateTimeBar();
 
     if (timeLeft <= 0) {
       finishGame("⏱ 時間終了");
@@ -113,24 +136,7 @@ function startTimer() {
   }, 1000);
 }
 
-// 時間バー更新
-function updateTimeBar() {
-  const bar = document.getElementById("time-bar-inner");
-  if (!bar) return;
-
-  const ratio = timeLeft / MAX_TIME;
-  bar.style.width = (ratio * 100) + "%";
-
-  if (timeLeft <= 10) {
-    bar.style.background = "#f44336"; // 赤
-  } else if (timeLeft <= 20) {
-    bar.style.background = "#ff9800"; // オレンジ
-  } else {
-    bar.style.background = "linear-gradient(90deg, #4caf50, #8bc34a)";
-  }
-}
-
-// UI更新
+/* ===== UI更新 ===== */
 function updateUI() {
   document.getElementById("pf-current-number").textContent =
     "現在の数: " + pfNumber;
@@ -146,7 +152,7 @@ function updateUI() {
   });
 }
 
-// 履歴表示
+/* ===== 履歴 ===== */
 function updateHistory() {
   document.getElementById("pf-history").textContent =
     history.length === 0
@@ -154,7 +160,7 @@ function updateHistory() {
       : `${originalNumber} = ${history.join(" × ")}`;
 }
 
-// 素数選択
+/* ===== 選択処理 ===== */
 function choosePrime(p) {
   if (pfNumber % p === 0) {
     pfNumber /= p;
@@ -175,12 +181,12 @@ function choosePrime(p) {
     document.getElementById("pf-message").textContent = "❌ 割れません";
 
     if (miss >= 2) {
-      finishGame("❌ ミス上限");
+      finishGame("❌ 終了");
     }
   }
 }
 
-// 終了・結果表示
+/* ===== 終了 ===== */
 function finishGame(title) {
   clearInterval(timerId);
 
@@ -195,8 +201,8 @@ function finishGame(title) {
     `結果：正解 ${pfScore} 問 ／ ミス ${miss} 回`;
 
   document.getElementById("pf-buttons").innerHTML = "";
-  document.getElementById("pf-message").textContent =
-    "おつかれさまでした！";
+  document.getElementById("pf-message").textContent = "おつかれさまでした！";
 }
+
 
 
