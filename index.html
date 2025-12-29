@@ -43,24 +43,20 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>second足し算クイズ</title>
+  <title>足し算クイズ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>second足し算クイズ</h1>
+  <h1>足し算クイズ</h1>
 
-  <div id="quiz-box">
-    <p id="question">ここに問題が出ます</p>
+  <p id="question">ここに問題が出ます</p>
 
-    <input type="number" id="answer" placeholder="答えを入力">
-    <br>
+  <input type="number" id="answer">
+  <button onclick="checkAnswer()">答える</button>
 
-    <button onclick="checkAnswer()">こたえる</button>
+  <p id="result"></p>
 
-    <p id="result"></p>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
