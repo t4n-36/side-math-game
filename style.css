@@ -135,3 +135,10 @@ button:hover {
   background: linear-gradient(90deg, #4caf50, #8bc34a);
   transition: width 1s linear, background 0.3s;
 }
+
+#pf-area {
+  margin-top: 20px;
+  min-height: 300px; /* ゲームエリアの最大高さに合わせる */
+  display: block;     /* 最初は表示した状態 */
+  visibility: hidden; /* 画面には見えない */
+}
