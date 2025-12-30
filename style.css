@@ -52,11 +52,78 @@ button:hover {
 /* ===== 素因数分解ゲーム ===== */
 #pf-area {
   margin-top: 20px;
-  height: 350px;       /* 高さ固定 */
-  display: block;      
-  visibility: hidden;  /* ゲーム開始前は非表示 */
+  height: 350px;        /* 高さ固定でスクロール防止 */
+  display: block;
+  visibility: hidden;    /* ゲーム開始前は非表示 */
 }
 
+/* 現在の数 */
+#pf-current-number {
+  font-size: 32px;       /* 大きく表示 */
+  font-weight: bold;
+  margin: 15px 0;
+  color: #2c3e50;
+}
+
+/* 履歴 */
+#pf-history {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+/* ボタンエリア */
+#pf-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* 素数ボタン */
+#pf-buttons button {
+  font-size: 24px;         /* ボタン文字大きめ */
+  padding: 16px;           /* ボタン自体も大きく */
+  background: #ffb703;
+  color: #333;
+  font-weight: bold;
+  border-radius: 14px;
+  box-shadow: 0 4px 0 #d18f00;
+  cursor: pointer;
+}
+
+#pf-buttons button:hover {
+  background: #ffd166;
+}
+
+#pf-buttons button:active {
+  box-shadow: 0 2px 0 #d18f00;
+  transform: translateY(2px);
+}
+
+/* 正誤メッセージ */
+#pf-message {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#pf-message:contains("⭕") {
+  color: green;
+}
+
+#pf-message:contains("❌") {
+  color: red;
+}
+
+/* タイマー・ミス */
+#time,
+#miss {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ===== タイムバー ===== */
 .time-bar {
   width: 100%;
   height: 16px;
@@ -73,6 +140,7 @@ button:hover {
   transition: width 0.3s linear, background 0.3s;
 }
 
+/* ストップボタン */
 #stop-btn {
   font-size: 16px;
   padding: 8px 16px;
@@ -81,5 +149,5 @@ button:hover {
   border: none;
   color: white;
   cursor: pointer;
+  background: #ff4d4d;
 }
-
