@@ -220,5 +220,10 @@ function finishGame(title) {
   updateTimeBar();
 }
 
+function stopGame() {
+  clearInterval(timerId);
+  clearInterval(countdownId);
+  finishGame("🛑 ストップしました");
+}
 
 
