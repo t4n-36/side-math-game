@@ -53,13 +53,12 @@ let countdownId = null;
 
 const primeChoices = [2, 3, 5, 7, 11, 13];
 
-// 最高スコア（端末ごと）
+// 最高スコア
 let bestScore = localStorage.getItem("pfBestScore") || 0;
 document.getElementById("best-score").textContent = bestScore;
 
-/* --- 出題用の数を作る --- */
 function generateFactorNumber() {
-  const count = Math.floor(Math.random() * 4) + 3; // 3〜6個
+  const count = Math.floor(Math.random() * 4) + 3;
   let n = 1;
   for (let i = 0; i < count; i++) {
     const p = primeChoices[Math.floor(Math.random() * primeChoices.length)];
@@ -68,12 +67,12 @@ function generateFactorNumber() {
   return n;
 }
 
-/* ===== スタート ===== */
 function startPrimeFactorGame() {
   clearInterval(timerId);
   clearInterval(countdownId);
 
-  document.getElementById("pf-area").style.display = "block";
+  document.getElementById("pf-area").style.visibility = "visible";
+  document.getElementById("stop-btn").style.display = "inline-block";
 
   timeLeft = 30;
   miss = 0;
@@ -81,7 +80,6 @@ function startPrimeFactorGame() {
 
   document.getElementById("time").textContent = timeLeft;
   document.getElementById("miss").textContent = miss;
-
   document.getElementById("pf-buttons").innerHTML = "";
   document.getElementById("pf-history").textContent = "";
   document.getElementById("pf-message").textContent = "準備中…";
@@ -89,7 +87,6 @@ function startPrimeFactorGame() {
   startCountdown();
 }
 
-/* ===== 3秒カウントダウン ===== */
 function startCountdown() {
   let count = 3;
   document.getElementById("pf-current-number").textContent = count;
@@ -106,14 +103,12 @@ function startCountdown() {
   }, 1000);
 }
 
-/* ===== 本当のゲーム開始 ===== */
 function startGame() {
   document.getElementById("pf-message").textContent = "";
   nextQuestion();
   startTimer();
 }
 
-/* ===== 次の問題 ===== */
 function nextQuestion() {
   pfNumber = generateFactorNumber();
   originalNumber = pfNumber;
@@ -122,7 +117,6 @@ function nextQuestion() {
   updateHistory();
 }
 
-/* ===== タイマー ===== */
 function startTimer() {
   timerId = setInterval(() => {
     timeLeft--;
@@ -135,13 +129,11 @@ function startTimer() {
   }, 1000);
 }
 
-/* ===== タイムバー更新 ===== */
 function updateTimeBar() {
   const percent = (timeLeft / 30) * 100;
   const bar = document.getElementById("time-bar-inner");
   bar.style.width = percent + "%";
 
-  // 色変化：緑 → 黄 → 赤
   if (percent > 50) {
     bar.style.background = "linear-gradient(90deg, #4caf50, #8bc34a)";
   } else if (percent > 20) {
@@ -151,7 +143,6 @@ function updateTimeBar() {
   }
 }
 
-/* ===== UI更新 ===== */
 function updateUI() {
   document.getElementById("pf-current-number").textContent =
     "現在の数: " + pfNumber;
@@ -167,7 +158,6 @@ function updateUI() {
   });
 }
 
-/* ===== 履歴 ===== */
 function updateHistory() {
   document.getElementById("pf-history").textContent =
     history.length === 0
@@ -175,7 +165,6 @@ function updateHistory() {
       : `${originalNumber} = ${history.join(" × ")}`;
 }
 
-/* ===== 選択処理 ===== */
 function choosePrime(p) {
   if (pfNumber % p === 0) {
     pfNumber /= p;
@@ -201,9 +190,15 @@ function choosePrime(p) {
   }
 }
 
-/* ===== 終了 ===== */
+function stopGame() {
+  clearInterval(timerId);
+  clearInterval(countdownId);
+  finishGame("🛑 ストップしました");
+}
+
 function finishGame(title) {
   clearInterval(timerId);
+  clearInterval(countdownId);
 
   if (pfScore > bestScore) {
     bestScore = pfScore;
@@ -217,13 +212,7 @@ function finishGame(title) {
 
   document.getElementById("pf-buttons").innerHTML = "";
   document.getElementById("pf-message").textContent = "おつかれさまでした！";
+  document.getElementById("stop-btn").style.display = "none";
   updateTimeBar();
 }
-
-function stopGame() {
-  clearInterval(timerId);
-  clearInterval(countdownId);
-  finishGame("🛑 ストップしました");
-}
-
 
