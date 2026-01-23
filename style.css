@@ -1,3 +1,14 @@
+/* ✅ 全体：スマホ操作最適化（ダブルタップ拡大対策にも有効） */
+*{
+  box-sizing: border-box;
+}
+
+html, body{
+  touch-action: manipulation; /* ✅ ダブルタップ拡大対策 */
+  -webkit-user-select: none;  /* ✅ 選択防止（タップ誤爆を減らす） */
+  user-select: none;
+}
+
 /* ===== 全体 ===== */
 body {
   font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
@@ -14,11 +25,13 @@ h1 {
 /* ===== カード共通 ===== */
 .card {
   background: white;
+  width: 100%;
   max-width: 420px;
   margin: 0 auto 30px;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  overflow: hidden; /* ✅ 枠外にはみ出し防止 */
 }
 
 /* ===== 足し算クイズ ===== */
@@ -52,14 +65,14 @@ button:hover {
 /* ===== 素因数分解ゲーム ===== */
 #pf-area {
   margin-top: 20px;
-  height: 350px;        /* 高さ固定でスクロール防止 */
+  height: 350px;
   display: block;
-  visibility: hidden;    /* ゲーム開始前は非表示 */
+  visibility: hidden;
 }
 
 /* 現在の数 */
 #pf-current-number {
-  font-size: 32px;       /* 大きく表示 */
+  font-size: 32px;
   font-weight: bold;
   margin: 15px 0;
   color: #2c3e50;
@@ -72,18 +85,20 @@ button:hover {
   color: #555;
 }
 
-/* ボタンエリア */
+/* ✅ ボタン枠：必ず枠内に収める */
 #pf-buttons {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* ✅ はみ出し防止 */
   gap: 10px;
   margin: 20px 0;
 }
 
-/* 素数ボタン */
+/* ✅ 素数ボタン：小さい画面でも収まる */
 #pf-buttons button {
-  font-size: 24px;         /* ボタン文字大きめ */
-  padding: 16px;           /* ボタン自体も大きく */
+  width: 100%;
+  font-size: 22px;
+  padding: 14px 0; /* ✅ 横幅を増やさない */
   background: #ffb703;
   color: #333;
   font-weight: bold;
@@ -106,14 +121,6 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
-}
-
-#pf-message:contains("⭕") {
-  color: green;
-}
-
-#pf-message:contains("❌") {
-  color: red;
 }
 
 /* タイマー・ミス */
@@ -150,4 +157,18 @@ button:hover {
   color: white;
   cursor: pointer;
   background: #ff4d4d;
+}
+
+/* ✅ スマホが狭い時はボタンや文字を少し縮める */
+@media (max-width: 420px){
+  body{
+    padding: 12px;
+  }
+  #pf-current-number{
+    font-size: 26px;
+  }
+  #pf-buttons button{
+    font-size: 20px;
+    padding: 12px 0;
+  }
 }
