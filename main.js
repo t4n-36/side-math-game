@@ -1,3 +1,16 @@
+/* ============================
+ ✅ ダブルタップ拡大 防止（iPhone対策）
+============================ */
+let lastTouchEnd = 0;
+
+document.addEventListener("touchend", function (event) {
+  const now = new Date().getTime();
+  if (now - lastTouchEnd <= 350) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, { passive: false });
+
 /* ===== 足し算クイズ ===== */
 
 let a, b;
@@ -215,4 +228,3 @@ function finishGame(title) {
   document.getElementById("stop-btn").style.display = "none";
   updateTimeBar();
 }
-
