@@ -2,7 +2,10 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ ダブルタップ拡大防止を強化したviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <title>数学ゲーム</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -31,32 +34,31 @@
   </section>
 
   <!-- ===== 素因数分解ゲーム ===== -->
-<section class="card">
-  <h2>素因数分解ゲーム</h2>
+  <section class="card">
+    <h2>素因数分解ゲーム</h2>
 
-  <p>己の限界：<span id="best-score">0</span></p>
+    <p>己の限界：<span id="best-score">0</span></p>
 
-  <button onclick="startPrimeFactorGame()">▶ スタート</button>
-  <button id="stop-btn" onclick="stopGame()" style="background:#ff4d4d; display:none;">■ ストップ</button>
+    <button onclick="startPrimeFactorGame()">▶ スタート</button>
+    <button id="stop-btn" onclick="stopGame()" style="background:#ff4d4d; display:none;">■ ストップ</button>
 
-  <div id="pf-area">
-    <!-- タイムバー -->
-    <div class="time-bar">
-      <div id="time-bar-inner"></div>
+    <div id="pf-area">
+      <!-- タイムバー -->
+      <div class="time-bar">
+        <div id="time-bar-inner"></div>
+      </div>
+
+      <p>残り時間：<span id="time">30</span> 秒</p>
+      <p>ミス：<span id="miss">0</span> / 2</p>
+
+      <p id="pf-current-number"></p>
+      <p id="pf-history"></p>
+
+      <div id="pf-buttons"></div>
+      <p id="pf-message"></p>
     </div>
-
-    <p>残り時間：<span id="time">30</span> 秒</p>
-    <p>ミス：<span id="miss">0</span> / 2</p>
-
-    <p id="pf-current-number"></p>
-    <p id="pf-history"></p>
-
-    <div id="pf-buttons"></div>
-    <p id="pf-message"></p>
-  </div>
-</section>
+  </section>
 
   <script src="main.js"></script>
 </body>
 </html>
-
